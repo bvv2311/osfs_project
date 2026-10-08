@@ -67,9 +67,7 @@ reward = ku - gamma_cov * cov^2 - alpha * norm_a - beta_a * |A| / max_idx
 
 ### UCB1
 
-\[
-\text{UCB1} = \frac{\text{wins}}{\text{visits}} + C \cdot \sqrt{\frac{\ln(\text{parent.visits})}{\text{visits}}}
-\]
+UCB1 = wins/visits  + C*sqrt(ln(parent.visits)/visits)
 
 - Первый член — эксплуатация (средний reward узла);
 - Второй — исследование (бонус за редкие посещения);
@@ -224,7 +222,7 @@ FORCED_ACTION = []  # например: [2, 5]
   depth      : 6
 ```
 
-3. **Граф переходов** — первые 20 записей в формате `state: [[next_states], action]`.
+3. **Граф переходов** — первые 20 записей в формате `state: [[[next_states], action], ..]`.
 
 Лучшая гипотеза гарантированно совпадает с `#1` из топ-5 после финальной валидации на полных данных.
 
