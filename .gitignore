@@ -1,0 +1,51 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# === Виртуальное окружение ===
+venv/
+.venv/
+env/
+ENV/
+
+# === Данные (генерируются, не коммитятся) ===
+data/*.csv
+data/*.json
+data/*.parquet
+data/*.pkl
+
+# === Логи и временные файлы ===
+*.log
+*.out
+*.tmp
+*.bak
+
+# === Графики (генерируются при запуске) ===
+*.png
+*.jpg
+*.svg
+*.pdf
+
+# === IDE ===
+.idea/
+.vscode/
+
+# === OS ===
+Thumbs.db
+.DS_Store
+
+# === Jupyter ===
+.ipynb_checkpoints/
+
+# === pytest ===
+.pytest_cache/
+.coverage
+
+# Разрешаем .gitkeep в data/
+!data/.gitkeep
