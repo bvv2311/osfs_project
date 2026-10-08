@@ -19,7 +19,7 @@
 
 ## Метрики
 
-### `ku` — предсказуемость (Kolmogorov–Uspensky)
+### `ku` — коэффициент однозначности (оценка предсказуемости)
 
 
 ku = 1 - u/(n + u)
@@ -35,19 +35,19 @@ ku = 1 - u/(n + u)
 ### `coverage` — покрытие
 
 
-cov = |sas'|/N
+cov = |sas'| / N
 
 
 Доля строк данных, покрытых графом переходов. Малый `cov` — обобщение (хорошо), большой `cov` — запоминание (плохо).
 
 ### `reward` — целевая функция
 
-reward = ku - gamma_cov \cdot \text{cov}^2 - \alpha \cdot \text{norm\_a} - \beta_a \cdot \frac{|A|}{\text{max\_idx}}
+reward = ku - gamma_cov * cov^2 - alpha * norm_a - beta_a * |A| / max_idx
 
 Компоненты штрафа:
-- `gamma_cov × cov²` — штраф за запоминание (квадратичный, доминирует при `cov → 1`);
-- `alpha × norm_a` — штраф за разнообразие действий;
-- `beta_a × |A|/max_idx` — штраф за «широту» action-набора.
+- `gamma_cov * cov²` — штраф за запоминание (квадратичный, доминирует при `cov → 1`);
+- `alpha * norm_a` — штраф за разнообразие действий;
+- `beta_a * |A|/(max_idx)` — штраф за «широту» action-набора.
 
 Если `cov ≥ coverage_threshold` — reward обнуляется (гипотеза отвергается).
 
@@ -86,9 +86,7 @@ reward = ku - gamma_cov \cdot \text{cov}^2 - \alpha \cdot \text{norm\_a} - \beta
 
 ### Достижимая глубина
 
-\[
-D_{\text{reachable}} = \frac{\log T}{\log B}
-\]
+D_reachable = log(T) \ log(B)
 
 Где `T` — число итераций, `B = 2 × max_idx`. При `T = 500` и `max_idx = 8`: `D_reachable ≈ 2.24`. Если ожидаемая глубина дерева больше достижимой, параметр `C` уменьшается (алгоритм становится более жадным).
 
