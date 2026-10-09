@@ -289,9 +289,9 @@ if __name__ == '__main__':
         'N':              8,
         'n_state_cols':    4,
         'n_action_cols':   2,
-        'state_ranges':   [2,3, 5,4],
+        'state_ranges':   [2, 3, 5,4],
         'action_ranges':  [3, 4],
-        'slip_prob':      0.05,
+        'slip_prob':      0.002,
         'noise_max':       4,
         'seed':           42,
         'missing_prob':    0.005,    # ячеек пустые
