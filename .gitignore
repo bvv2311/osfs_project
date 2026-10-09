@@ -13,8 +13,9 @@ venv/
 .venv/
 env/
 ENV/
+results/
 
-# === Данные (генерируются, не коммитятся) ===
+# === Данные ===
 data/*.csv
 data/*.json
 data/*.parquet
