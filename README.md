@@ -66,7 +66,7 @@ reward = ku - gamma_cov * cov^2 - alpha * norm_a - beta_a * |A| / max_idx
 
 ### UCB1
 
-UCB1 = wins/visits  + C*sqrt(ln(parent.visits)/visits))
+UCB1 = wins/visits  + c*sqrt(ln(parent.visits)/visits))
 
 - Первый член — эксплуатация (средний reward узла);
 - Второй — исследование (бонус за редкие посещения);
