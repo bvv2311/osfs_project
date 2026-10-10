@@ -83,7 +83,7 @@ UCB1 = wins/visits  + C*sqrt(ln(parent.visits)/visits))
 
 ### Достижимая глубина
 
-D_reachable = log(T) \ log(B)
+D_reachable = log(T) / log(B)
 
 Где `T` — число итераций, `B = 2 × max_idx`. При `T = 500` и `max_idx = 8`: `D_reachable ≈ 2.24`. Если ожидаемая глубина дерева больше достижимой, параметр `C` уменьшается (алгоритм становится более жадным).
 
