@@ -14,7 +14,7 @@ DEFAULT_C = 1.414
 DEFAULT_MAX_DEPTH = None
 DEFAULT_COV_THRESH = 0.95
 DEFAULT_GAMMA_COV = 1.0
-DEFAULT_ITERATIONS = 500
+DEFAULT_ITERATIONS = 70
 DEFAULT_ALPHA = 0.5
 
 # 1. Получаем абсолютный путь к папке, где лежит этот скрипт (src/)
@@ -364,7 +364,7 @@ class HypothesisMCTS:
         self.max_depth = max_depth
         self.gamma_cov = gamma_cov
 
-    def search(self, data, iterations=500, min_triplets=5, alpha=0.5,
+    def search(self, data, iterations=DEFAULT_ITERATIONS, min_triplets=5, alpha=0.5,
                coverage_threshold=0.5,
                init_state_idx=None, init_action_idx=None,
                analysis_state=None, analysis_action=None,
@@ -608,7 +608,7 @@ def evaluate_parameter(data, param_name, param_values, fixed_params,
                              exploration_param=kwargs.get('exploration_param', 1.414),
                              beta_a=beta_a, max_depth=max_depth, gamma_cov=gamma_cov)
         start = time.time()
-        hyp, _top = mcts.search(data, iterations=kwargs.get('iterations', 500),
+        hyp, _top = mcts.search(data, iterations=kwargs.get('iterations', DEFAULT_ITERATIONS),
                           min_triplets=kwargs.get('min_triplets', 5),
                           alpha=kwargs.get('alpha', 0.5),
                           coverage_threshold=kwargs.get('coverage_threshold', cov_threshold),
@@ -638,7 +638,7 @@ def plot_results(data, max_idx, c_rec=None, max_depth=None,
     plt.style.use('seaborn-v0_8-darkgrid')
 
     print(f"\n1. Оценка итераций (c={c_rec}, alpha=0.5)...")
-    it_vals = [10, 50, 100, 200, 500, 700]
+    it_vals = [10, 50, 100, 200, 500]
     it_res = evaluate_parameter(data, 'iterations', it_vals,
         {'exploration_param': c_rec, 'min_triplets': 5, 'coverage_threshold': cov_threshold},
         max_idx, beta_a=beta_a, max_depth=max_depth, gamma_cov=gamma_cov,
@@ -652,10 +652,10 @@ def plot_results(data, max_idx, c_rec=None, max_depth=None,
     ax2.set_ylabel('cov [0-1]', color='r'); ax2.tick_params(axis='y', labelcolor='r')
     ax1.legend(handles=[l1, l2], loc='center right'); ax1.set_title('Итерации')
 
-    print(f"\n2. Параметр c (i=500, alpha=0.5)...")
+    print(f"\n2. Параметр c (i=DEFAULT_ITERATIONS, alpha=0.5)...")
     c_vals = sorted(set([0.01, 0.05, 0.1, c_rec, 0.3, 0.5, 1.0, 1.414, 2.0, 3.0]))
     c_res = evaluate_parameter(data, 'exploration_param', c_vals,
-        {'iterations': 500, 'min_triplets': 5, 'coverage_threshold': cov_threshold, 'alpha': 0.5},
+        {'iterations': DEFAULT_ITERATIONS, 'min_triplets': 5, 'coverage_threshold': cov_threshold, 'alpha': 0.5},
         max_idx, beta_a=beta_a, max_depth=max_depth, gamma_cov=gamma_cov,
         cov_threshold=cov_threshold, analysis_state=analysis_state, analysis_action=analysis_action)
 
@@ -666,10 +666,10 @@ def plot_results(data, max_idx, c_rec=None, max_depth=None,
     if c_rec: ax3.axvline(x=c_rec, color='blue', linestyle='--', linewidth=1.5, label=f'c_rec={c_rec}')
     ax3.legend(); ax3.set_title('Параметр c (ku и cov)')
 
-    print(f"\n3. Alpha (i=500, c={c_rec})...")
+    print(f"\n3. Alpha (i=DEFAULT_ITERATIONS, c={c_rec})...")
     a_vals = [0.1, 0.3, 0.5, 0.7, 0.9, 1.0]
     a_res = evaluate_parameter(data, 'alpha', a_vals,
-        {'iterations': 500, 'min_triplets': 5, 'coverage_threshold': cov_threshold, 'exploration_param': c_rec},
+        {'iterations': DEFAULT_ITERATIONS, 'min_triplets': 5, 'coverage_threshold': cov_threshold, 'exploration_param': c_rec},
         max_idx, beta_a=beta_a, max_depth=max_depth, gamma_cov=gamma_cov,
         cov_threshold=cov_threshold, analysis_state=analysis_state, analysis_action=analysis_action)
 
@@ -712,7 +712,7 @@ def plot_results(data, max_idx, c_rec=None, max_depth=None,
 # 7. ФИНАЛЬНЫЙ ПОИСК
 # =====================================================================
 
-def run_final_search(data, max_idx, auto=True, iterations=500,
+def run_final_search(data, max_idx, auto=True, iterations=DEFAULT_ITERATIONS,
                      alpha=0.5, exploration_param=1.414,
                      beta_a=beta_a_default, max_depth=None,
                      cov_thresh=None, gamma_cov=None, analysis=None,
